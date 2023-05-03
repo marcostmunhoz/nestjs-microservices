@@ -1,0 +1,4 @@
+[submodule "api-gateway"]
+	path = api-gateway
+	url = git@github.com:marcostmunhoz/nestjs-microservices-api-gateway.git
+	branch = main

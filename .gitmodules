@@ -2,3 +2,11 @@
 	path = api-gateway
 	url = git@github.com:marcostmunhoz/nestjs-microservices-api-gateway.git
 	branch = main
+[submodule "auth"]
+	path = auth
+	url = git@github.com:marcostmunhoz/nestjs-microservices-auth.git
+	branch = main
+[submodule "account"]
+	path = account
+	url = git@github.com:marcostmunhoz/nestjs-microservices-account.git
+	branch = main

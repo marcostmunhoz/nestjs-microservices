@@ -1,0 +1,30 @@
+services:
+  auth:
+    build:
+      dockerfile: auth/Dockerfile
+    ports:
+     - ${AUTH_SERVICE_PORT}
+    environment:
+      AUTH_SERVICE_SERVER_HOST: ${AUTH_SERVICE_SERVER_HOST}
+      AUTH_SERVICE_PORT: ${AUTH_SERVICE_PORT}
+
+  account:
+    build:
+      dockerfile: account/Dockerfile
+    ports:
+      - ${ACCOUNT_SERVICE_PORT}
+    environment:
+      ACCOUNT_SERVICE_SERVER_HOST: ${ACCOUNT_SERVICE_SERVER_HOST}
+      ACCOUNT_SERVICE_PORT: ${ACCOUNT_SERVICE_PORT}
+
+  api-gateway:
+    build:
+      dockerfile: api-gateway/Dockerfile
+    ports:
+      - 80:${API_GATEWAY_SERVICE_PORT}
+    environment:
+      API_GATEWAY_SERVICE_PORT: ${API_GATEWAY_SERVICE_PORT}
+      AUTH_SERVICE_HOST: ${AUTH_SERVICE_HOST}
+      AUTH_SERVICE_PORT: ${AUTH_SERVICE_PORT}
+      ACCOUNT_SERVICE_HOST: ${ACCOUNT_SERVICE_HOST}
+      ACCOUNT_SERVICE_PORT: ${ACCOUNT_SERVICE_PORT}

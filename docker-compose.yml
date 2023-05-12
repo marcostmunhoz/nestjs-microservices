@@ -2,20 +2,41 @@ services:
   auth:
     build:
       dockerfile: auth/Dockerfile
-    ports:
-     - ${AUTH_SERVICE_PORT}
     environment:
-      AUTH_SERVICE_SERVER_HOST: ${AUTH_SERVICE_SERVER_HOST}
-      AUTH_SERVICE_PORT: ${AUTH_SERVICE_PORT}
+      HOST: ${AUTH_SERVICE_SERVER_HOST}
+      PORT: ${AUTH_SERVICE_PORT}
+      DB_HOST: ${AUTH_DB_HOST}
+      DB_PORT: ${AUTH_DB_PORT}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+    depends_on:
+      - auth-db
+      - redis
+
+  auth-db:
+    image: mongo:latest
 
   account:
     build:
       dockerfile: account/Dockerfile
-    ports:
-      - ${ACCOUNT_SERVICE_PORT}
     environment:
-      ACCOUNT_SERVICE_SERVER_HOST: ${ACCOUNT_SERVICE_SERVER_HOST}
-      ACCOUNT_SERVICE_PORT: ${ACCOUNT_SERVICE_PORT}
+      HOST: ${ACCOUNT_SERVICE_SERVER_HOST}
+      PORT: ${ACCOUNT_SERVICE_PORT}
+      DB_HOST: ${ACCOUNT_DB_HOST}
+      DB_PORT: ${ACCOUNT_DB_PORT}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+    depends_on:
+      - account-db
+      - redis
+
+  account-db:
+    image: mongo:latest
+
+  redis:
+    image: redis:latest
+    ports:
+      - ${REDIS_PORT}
 
   api-gateway:
     build:
@@ -24,7 +45,10 @@ services:
       - 80:${API_GATEWAY_SERVICE_PORT}
     environment:
       API_GATEWAY_SERVICE_PORT: ${API_GATEWAY_SERVICE_PORT}
-      AUTH_SERVICE_HOST: ${AUTH_SERVICE_HOST}
+      AUTH_SERVICE_HOST: ${AUTH_SERVICE_CLIENT_HOST}
       AUTH_SERVICE_PORT: ${AUTH_SERVICE_PORT}
-      ACCOUNT_SERVICE_HOST: ${ACCOUNT_SERVICE_HOST}
+      ACCOUNT_SERVICE_HOST: ${ACCOUNT_SERVICE_CLIENT_HOST}
       ACCOUNT_SERVICE_PORT: ${ACCOUNT_SERVICE_PORT}
+    depends_on:
+      - auth
+      - account

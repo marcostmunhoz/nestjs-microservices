@@ -1,7 +1,7 @@
 services:
   auth:
     build:
-      dockerfile: auth/Dockerfile
+      context: auth
     environment:
       HOST: ${AUTH_SERVICE_SERVER_HOST}
       PORT: ${AUTH_SERVICE_PORT}
@@ -18,7 +18,7 @@ services:
 
   account:
     build:
-      dockerfile: account/Dockerfile
+      context: account
     environment:
       HOST: ${ACCOUNT_SERVICE_SERVER_HOST}
       PORT: ${ACCOUNT_SERVICE_PORT}
@@ -40,7 +40,7 @@ services:
 
   api-gateway:
     build:
-      dockerfile: api-gateway/Dockerfile
+      context: api-gateway
     ports:
       - 80:${API_GATEWAY_SERVICE_PORT}
     environment:

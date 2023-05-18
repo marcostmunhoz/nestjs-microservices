@@ -10,3 +10,7 @@
 	path = account
 	url = git@github.com:marcostmunhoz/nestjs-microservices-account.git
 	branch = main
+[submodule "php-app"]
+	path = php-app
+	url = git@github.com:marcostmunhoz/nestjs-microservices-php-app.git
+	branch = main

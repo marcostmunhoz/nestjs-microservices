@@ -52,3 +52,14 @@ services:
     depends_on:
       - auth
       - account
+
+  php-app:
+    build:
+      context: php-app
+    ports:
+      - 8080:80
+    environment:
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+    depends_on:
+      - redis
